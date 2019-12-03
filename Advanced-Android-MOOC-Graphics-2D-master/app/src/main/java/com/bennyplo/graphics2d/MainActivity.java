@@ -1,10 +1,7 @@
 package com.bennyplo.graphics2d;
 
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
     private MyView mMyView=null;//a custom view for drawing

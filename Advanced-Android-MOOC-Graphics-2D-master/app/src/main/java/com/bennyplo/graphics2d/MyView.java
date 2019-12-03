@@ -17,13 +17,15 @@ import android.view.View;
 public class MyView extends View {
     private Paint redPaint;
     private Paint bluePaint;
+    private Path lineGraph;
+    int viewHeight, viewWidth;
 
     Point[] points;
     Path path;
 
     public MyView(Context context) {
         super(context, null);
-        createPoints();
+
         //Add your initialisation code here
         redPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
         redPaint.setStyle(Paint.Style.STROKE);//stroke only no fill
@@ -34,6 +36,12 @@ public class MyView extends View {
         bluePaint.setStyle(Paint.Style.STROKE);//stroke only no fill
         bluePaint.setColor(0xFF0000FF);//color blue
         bluePaint.setStrokeWidth(2);//set the line stroke width to 5
+
+        viewHeight = getResources().getDisplayMetrics().heightPixels - 210;
+        viewWidth = getResources().getDisplayMetrics().widthPixels;
+
+        int plotData[]={11,29,10,20,12,5,31,24,21,13};
+        lineGraph = createLineGraph(plotData, viewWidth, viewHeight);
     }
 
     public void createPoints() {
@@ -43,6 +51,14 @@ public class MyView extends View {
         points[2] = new Point(180,340);
         points[3] = new Point(240,420);
         points[4] = new Point(300,200);
+    }
+
+    public void createPoints2() {
+        points = new Point[4];
+        points[0] = new Point(500,300);
+        points[1] = new Point(500,400);
+        points[2] = new Point(600,400);
+        points[3] = new Point(600,300);
     }
 
     protected void updatePath(Point[] newPoints) {
@@ -71,7 +87,7 @@ public class MyView extends View {
         return affineTransformation(input, matrix);
     }
 
-    protected Point[] shear(Point[] input, int factorX, int factorY){
+    protected Point[] shear(Point[] input, double factorX, double factorY){
         double[][] matrix = new double[3][3];
         matrix[0][0] = 1; matrix[0][1] = factorY; matrix[0][2] = 0;
         matrix[1][0] = factorX; matrix[1][1] = 1; matrix[1][2] = 0;
@@ -89,6 +105,17 @@ public class MyView extends View {
 
     protected double convert2rad(double degree){
         return degree*Math.PI/180;
+    }
+
+    protected Point centroid(Point[] points){
+        Point center = new Point(0,0);
+        for (int i=0; i<points.length; i++) {
+            center.x = center.x + points[i].x;
+            center.y = center.y + points[i].y;
+        }
+        center.x = center.x/points.length;
+        center.y = center.y/points.length;
+        return center;
     }
 
     protected Point[] rotate(Point[] input, double degree){
@@ -174,13 +201,9 @@ public class MyView extends View {
         canvas.drawPath(path, paint);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        //Add your drawing code here
-        //canvas.drawRect(500, 500,700,700,redPaint);
-        //canvas.drawCircle(600,600,145,bluePaint);
-        //drawPolynFillGradient(canvas);
+    public void affineTransformationTest01(Canvas canvas){
+        Paint paint = new Paint();
+        createPoints();
 
         path = new Path();
         path.moveTo(points[0].x, points[0].y);
@@ -189,10 +212,85 @@ public class MyView extends View {
         path.lineTo(points[3].x, points[3].y);
         path.lineTo(points[4].x, points[4].y);
         canvas.drawPath(path,redPaint);
-//        Point[] newPoints = translate(points, 20, 40);
-        Point[] newPoints = rotate(points, 0);
-        updatePath(newPoints);
-        canvas.drawPath(path, bluePaint);
 
+        Point[] newPoints = shear(points, 0.2, 0);
+        newPoints = scale(newPoints, 0.5, 3);
+
+        Point center = centroid(newPoints);
+        newPoints = translate(newPoints,-center.x,-center.y);
+        newPoints = rotate(newPoints, 45);
+        newPoints = translate(newPoints,center.x,center.y);
+
+        newPoints = translate(newPoints, 550,0);
+
+        updatePath(newPoints);
+        canvas.drawPath(path, paint);
+
+        //(x_0, y_0) : (50, 300)
+        //(x_4, y_4) : (300, 200)
+        LinearGradient linear = new LinearGradient(newPoints[0].x, newPoints[0].y, newPoints[4].x, newPoints[4].y, Color.BLUE, Color.RED, Shader.TileMode.MIRROR);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setShader(linear);
+
+        canvas.drawPath(path, paint);
+    }
+
+    public void affineTransformationTest02(Canvas canvas){
+        Paint paint = new Paint();
+        createPoints2();
+        path = new Path();
+        path.moveTo(points[0].x, points[0].y);
+        path.lineTo(points[1].x, points[1].y);
+        path.lineTo(points[2].x, points[2].y);
+        path.lineTo(points[3].x, points[3].y);
+        canvas.drawPath(path,redPaint);
+
+        Point center = centroid(points);
+
+        Point[] newPoints = translate(points,-center.x,-center.y);
+        newPoints = rotate(newPoints, 45);
+        newPoints = translate(newPoints,center.x,center.y);
+
+        updatePath(newPoints);
+        canvas.drawPath(path, paint);
+
+        //(x_0, y_0) : (50, 300)
+        //(x_4, y_4) : (300, 200)
+        LinearGradient linear = new LinearGradient(500, 400, 600, 300, Color.BLUE, Color.RED, Shader.TileMode.MIRROR);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setShader(linear);
+
+        canvas.drawPath(path, paint);
+    }
+
+    private Path createLineGraph(int[] input , int width, int height){
+        Point[] ptArray = new Point[input.length];
+        int minValue = 999999, maxValue = -999999;
+        for (int i=0; i<input.length;i++){
+            ptArray[i]=new Point(i, input[i]);
+            minValue = Math.min(minValue, input[i]);
+            maxValue = Math.max(maxValue, input[i]);
+        }
+        ptArray = translate(ptArray,0,-minValue);
+        double yScale = height/(double) (maxValue-minValue), xScale = width/(double)(input.length-1);
+
+        ptArray=scale(ptArray,xScale, yScale);
+        Path result = new Path();
+        result.moveTo(ptArray[0].x,ptArray[0].y);
+
+        for(int i=1;i<ptArray.length;i++)
+            result.lineTo(ptArray[i].x, ptArray[i].y);
+
+        return result;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        //Add your drawing code here
+        //canvas.drawRect(500, 500,700,700,redPaint);
+        //canvas.drawCircle(600,600,145,bluePaint);
+
+        canvas.drawPath(lineGraph, redPaint);
     }
 }
