@@ -87,10 +87,15 @@ public class MyView extends View {
         return affineTransformation(input, matrix);
     }
 
-    protected Point[] rotate(Point[] input, double factorX, double factorY){
+    protected double convert2rad(double degree){
+        return degree*Math.PI/180;
+    }
+
+    protected Point[] rotate(Point[] input, double degree){
         double[][] matrix = new double[3][3];
-        matrix[0][0] = factorX; matrix[0][1] = 0; matrix[0][2] = 0;
-        matrix[1][0] = 0; matrix[1][1] = factorY; matrix[1][2] = 0;
+        double rad = convert2rad(degree);
+        matrix[0][0] = Math.cos(rad); matrix[0][1] = -(Math.sin(rad)); matrix[0][2] = 0;
+        matrix[1][0] = Math.sin(rad); matrix[1][1] = Math.cos(rad); matrix[1][2] = 0;
         matrix[2][0] = matrix[2][1] = 0; matrix[2][2] = 1;
         return affineTransformation(input, matrix);
     }
@@ -185,7 +190,7 @@ public class MyView extends View {
         path.lineTo(points[4].x, points[4].y);
         canvas.drawPath(path,redPaint);
 //        Point[] newPoints = translate(points, 20, 40);
-        Point[] newPoints = scale(points, 1, 1);
+        Point[] newPoints = rotate(points, 0);
         updatePath(newPoints);
         canvas.drawPath(path, bluePaint);
 
