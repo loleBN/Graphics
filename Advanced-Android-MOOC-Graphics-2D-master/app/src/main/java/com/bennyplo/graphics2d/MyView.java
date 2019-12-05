@@ -7,6 +7,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.view.View;
 
@@ -89,8 +90,8 @@ public class MyView extends View {
 
     protected Point[] shear(Point[] input, double factorX, double factorY){
         double[][] matrix = new double[3][3];
-        matrix[0][0] = 1; matrix[0][1] = factorY; matrix[0][2] = 0;
-        matrix[1][0] = factorX; matrix[1][1] = 1; matrix[1][2] = 0;
+        matrix[0][0] = 1; matrix[0][1] = factorX; matrix[0][2] = 0;
+        matrix[1][0] = factorY; matrix[1][1] = 1; matrix[1][2] = 0;
         matrix[2][0] = matrix[2][1] = 0; matrix[2][2] = 1;
         return affineTransformation(input, matrix);
     }
@@ -283,6 +284,26 @@ public class MyView extends View {
 
         return result;
     }
+    private Path createPieGraph(int[] input , int width, int height){
+        Point[] ptArray = new Point[input.length];
+        int minValue = 999999, maxValue = -999999;
+        for (int i=0; i<input.length;i++){
+            ptArray[i]=new Point(i, input[i]);
+            minValue = Math.min(minValue, input[i]);
+            maxValue = Math.max(maxValue, input[i]);
+        }
+        ptArray = translate(ptArray,0,-minValue);
+        double yScale = height/(double) (maxValue-minValue), xScale = width/(double)(input.length-1);
+
+        ptArray=scale(ptArray,xScale, yScale);
+        Path result = new Path();
+        result.moveTo(ptArray[0].x,ptArray[0].y);
+
+        for(int i=1;i<ptArray.length;i++)
+            result.lineTo(ptArray[i].x, ptArray[i].y);
+
+        return result;
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -290,7 +311,16 @@ public class MyView extends View {
         //Add your drawing code here
         //canvas.drawRect(500, 500,700,700,redPaint);
         //canvas.drawCircle(600,600,145,bluePaint);
+        //affineTransformationTest01(canvas);
+//        canvas.drawPath(lineGraph, redPaint);
 
-        canvas.drawPath(lineGraph, redPaint);
+//        RectF rectF = new RectF(10,viewHeight/2, 10);
+//        canvas.drawArc(new RectF('oval'), 0F, 90F, true, turquoisePaint)
+//        canvas.drawArc(oval, 90F, 90F, true, orangePaint)
+//        canvas.drawArc(oval, 180F, 90F, true, yellowPaint)
+//        canvas.drawArc(oval, 270F, 90F, true, hotPinkPaint)
+
+        for (int i=0; i<50;i++)
+            canvas.drawLine(i, (float)(10*Math.sin((i*Math.PI/180))),i+1, (float)(10*Math.sin(((i+1)*Math.PI/180))), bluePaint);
     }
 }
