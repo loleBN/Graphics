@@ -30,6 +30,8 @@ public class MyView extends View {
         cube_vertices[7] = new Coordinate(1, 1, 1, 1);
         draw_cube_vertices=translate(cube_vertices,2,2,2);
         draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
+//        draw_cube_vertices=rotate(draw_cube_vertices,45,1);
+//        draw_cube_vertices=rotate(draw_cube_vertices,45,0);
         thisview.invalidate();//update the view
     }
 
@@ -119,5 +121,27 @@ public class MyView extends View {
         return Transformation(vertices,matrix);
     }
 
+    // axis (x=1, y=2, z=3)
+    private Coordinate[]rotate(Coordinate []vertices,double angle, int axis)
+    {
+        double []matrix=GetIdentityMatrix();
+        if (axis==1) {
+            matrix[5] = Math.cos((angle*Math.PI/180));
+            matrix[6] = -Math.sin((angle*Math.PI/180));
+            matrix[9] = Math.sin((angle*Math.PI/180));
+            matrix[10] = Math.cos((angle*Math.PI/180));
+        } else if (axis==2) {
+            matrix[0] = Math.cos((angle*Math.PI/180));
+            matrix[2] = Math.sin((angle*Math.PI/180));
+            matrix[8] = -Math.sin((angle*Math.PI/180));
+            matrix[10] = Math.cos((angle*Math.PI/180));
+        } else if (axis==3){
+            matrix[0] = Math.cos((angle*Math.PI/180));
+            matrix[1] = -Math.sin((angle*Math.PI/180));
+            matrix[4] = Math.sin((angle*Math.PI/180));
+            matrix[5] = Math.cos((angle*Math.PI/180));
+        }
+        return Transformation(vertices,matrix);
+    }
 
 }
