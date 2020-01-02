@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.util.Log;
 import android.view.View;
 
 public class MyView extends View {
@@ -30,8 +32,14 @@ public class MyView extends View {
         cube_vertices[7] = new Coordinate(1, 1, 1, 1);
         draw_cube_vertices=translate(cube_vertices,2,2,2);
         draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
-//        draw_cube_vertices=rotate(draw_cube_vertices,45,1);
-//        draw_cube_vertices=rotate(draw_cube_vertices,45,0);
+        Coordinate center =centroid(draw_cube_vertices);
+        Log.d("CENTER","x:"+center.x+"y:"+center.y+"z:"+center.z+"w:"+center.w);
+
+        draw_cube_vertices=translate(cube_vertices,-center.x,-center.y,-center.z);
+        draw_cube_vertices=rotate(draw_cube_vertices,45,1);
+        draw_cube_vertices=rotate(draw_cube_vertices,45,0);
+        draw_cube_vertices=translate(cube_vertices,center.x,center.y,center.z);
+
         thisview.invalidate();//update the view
     }
 
@@ -67,6 +75,20 @@ public class MyView extends View {
         super.onDraw(canvas);
         DrawCube(canvas);//draw a cube onto the screen
     }
+
+    protected Coordinate centroid(Coordinate[] points){
+        Coordinate center = new Coordinate(0,0,0,0);
+        for (int i=0; i<points.length; i++) {
+            center.x = center.x + points[i].x;
+            center.y = center.y + points[i].y;
+            center.z = center.z + points[i].z;
+            center.w = center.w + points[i].w;
+        }
+        center.x = center.x/points.length;
+        center.y = center.y/points.length;
+        return center;
+    }
+
     //*********************************
     //matrix and transformation functions
     public double []GetIdentityMatrix()
@@ -125,17 +147,17 @@ public class MyView extends View {
     private Coordinate[]rotate(Coordinate []vertices,double angle, int axis)
     {
         double []matrix=GetIdentityMatrix();
-        if (axis==1) {
+        if (axis==0) {
             matrix[5] = Math.cos((angle*Math.PI/180));
             matrix[6] = -Math.sin((angle*Math.PI/180));
             matrix[9] = Math.sin((angle*Math.PI/180));
             matrix[10] = Math.cos((angle*Math.PI/180));
-        } else if (axis==2) {
+        } else if (axis==1) {
             matrix[0] = Math.cos((angle*Math.PI/180));
             matrix[2] = Math.sin((angle*Math.PI/180));
             matrix[8] = -Math.sin((angle*Math.PI/180));
             matrix[10] = Math.cos((angle*Math.PI/180));
-        } else if (axis==3){
+        } else if (axis==2){
             matrix[0] = Math.cos((angle*Math.PI/180));
             matrix[1] = -Math.sin((angle*Math.PI/180));
             matrix[4] = Math.sin((angle*Math.PI/180));

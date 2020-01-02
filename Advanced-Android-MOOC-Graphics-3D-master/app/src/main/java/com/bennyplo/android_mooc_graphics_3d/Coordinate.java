@@ -8,6 +8,10 @@ public class Coordinate {
     {//create a coordinate with 0,0,0
         x=0;y=0;z=0;w=1;
     }
+    public Coordinate(double x,double y)
+    {//create a Coordinate object
+        this.x=x;this.y=y;
+    }
     public Coordinate(double x,double y,double z, double w)
     {//create a Coordinate object
         this.x=x;this.y=y;this.z=z; this.w=w;
