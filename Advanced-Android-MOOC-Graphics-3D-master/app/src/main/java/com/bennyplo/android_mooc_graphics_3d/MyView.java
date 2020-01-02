@@ -32,15 +32,13 @@ public class MyView extends View {
         cube_vertices[6] = new Coordinate(1, 1, -1, 1);
         cube_vertices[7] = new Coordinate(1, 1, 1, 1);
 
-        /*draw_cube_vertices=translate(cube_vertices,2,2,2);
+        draw_cube_vertices=translate(cube_vertices,2,2,2);
         draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
-        Coordinate center =centroid(draw_cube_vertices);
-        Log.d("CENTER","x:"+center.x+"y:"+center.y+"z:"+center.z+"w:"+center.w);
-        draw_cube_vertices=translate(cube_vertices,-center.x,-center.y,-center.z);
-        draw_cube_vertices=rotate(draw_cube_vertices,45,1);
-        draw_cube_vertices=rotate(draw_cube_vertices,45,0);
-        draw_cube_vertices=translate(cube_vertices,center.x,center.y,center.z);*/
+//        draw_cube_vertices=rotate(draw_cube_vertices,45,1);
+//        draw_cube_vertices=rotate(draw_cube_vertices,45,0);
+        thisview.invalidate();//update the view
 
+        /*### 1st try
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             int angle=45;
@@ -56,9 +54,30 @@ public class MyView extends View {
                 if (angle>=360) angle=0;
             }
         };
-        timer.scheduleAtFixedRate(task,1000,1000);
+        timer.scheduleAtFixedRate(task,100,100);*/
 
-//        thisview.invalidate();//update the view
+        ///2sd try
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            float position_x=0f;
+            boolean dir=true;
+            @Override
+            public void run() {
+                if (position_x+80>=getWidth() && dir == true)
+                    dir=false;
+                else if (dir==false && position_x<=0)
+                    dir=true;
+                if(dir){
+                    draw_cube_vertices=translate(draw_cube_vertices,1f,0,0);
+                    position_x+=1f;
+                } else {
+                    draw_cube_vertices=translate(draw_cube_vertices,-1f,0,0);
+                    position_x-=1f;
+                }
+                thisview.invalidate();
+            }
+        };
+        timer.scheduleAtFixedRate(task,100,2);
     }
 
     private  void DrawLinePairs(Canvas canvas, Coordinate[] vertices, int start, int end, Paint paint)
