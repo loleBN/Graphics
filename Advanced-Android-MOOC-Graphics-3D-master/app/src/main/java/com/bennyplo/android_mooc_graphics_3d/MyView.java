@@ -4,9 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.util.Log;
 import android.view.View;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MyView extends View {
     private Paint redPaint; //paint object for drawing the lines
@@ -30,17 +31,34 @@ public class MyView extends View {
         cube_vertices[5] = new Coordinate(1, -1, 1, 1);
         cube_vertices[6] = new Coordinate(1, 1, -1, 1);
         cube_vertices[7] = new Coordinate(1, 1, 1, 1);
-        draw_cube_vertices=translate(cube_vertices,2,2,2);
+
+        /*draw_cube_vertices=translate(cube_vertices,2,2,2);
         draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
         Coordinate center =centroid(draw_cube_vertices);
         Log.d("CENTER","x:"+center.x+"y:"+center.y+"z:"+center.z+"w:"+center.w);
-
         draw_cube_vertices=translate(cube_vertices,-center.x,-center.y,-center.z);
         draw_cube_vertices=rotate(draw_cube_vertices,45,1);
         draw_cube_vertices=rotate(draw_cube_vertices,45,0);
-        draw_cube_vertices=translate(cube_vertices,center.x,center.y,center.z);
+        draw_cube_vertices=translate(cube_vertices,center.x,center.y,center.z);*/
 
-        thisview.invalidate();//update the view
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int angle=45;
+            @Override
+            public void run() {
+                draw_cube_vertices=translate(cube_vertices,2,2,2);
+                draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
+                draw_cube_vertices=rotate(draw_cube_vertices,90,0);
+                draw_cube_vertices=rotate(draw_cube_vertices,25,1);
+                draw_cube_vertices=translate(cube_vertices,200,200,0);
+                thisview.invalidate();
+                angle+=10;
+                if (angle>=360) angle=0;
+            }
+        };
+        timer.scheduleAtFixedRate(task,1000,1000);
+
+//        thisview.invalidate();//update the view
     }
 
     private  void DrawLinePairs(Canvas canvas, Coordinate[] vertices, int start, int end, Paint paint)
@@ -144,24 +162,25 @@ public class MyView extends View {
     }
 
     // axis (x=1, y=2, z=3)
-    private Coordinate[]rotate(Coordinate []vertices,double angle, int axis)
+    private Coordinate[]rotate(Coordinate []vertices,double degree, int axis)
     {
         double []matrix=GetIdentityMatrix();
+        double radian = degree*Math.PI/180;
         if (axis==0) {
-            matrix[5] = Math.cos((angle*Math.PI/180));
-            matrix[6] = -Math.sin((angle*Math.PI/180));
-            matrix[9] = Math.sin((angle*Math.PI/180));
-            matrix[10] = Math.cos((angle*Math.PI/180));
+            matrix[5] = Math.cos(radian);
+            matrix[6] = -Math.sin(radian);
+            matrix[9] = Math.sin(radian);
+            matrix[10] = Math.cos(radian);
         } else if (axis==1) {
-            matrix[0] = Math.cos((angle*Math.PI/180));
-            matrix[2] = Math.sin((angle*Math.PI/180));
-            matrix[8] = -Math.sin((angle*Math.PI/180));
-            matrix[10] = Math.cos((angle*Math.PI/180));
+            matrix[0] = Math.cos(radian);
+            matrix[2] = Math.sin(radian);
+            matrix[8] = -Math.sin(radian);
+            matrix[10] = Math.cos(radian);
         } else if (axis==2){
-            matrix[0] = Math.cos((angle*Math.PI/180));
-            matrix[1] = -Math.sin((angle*Math.PI/180));
-            matrix[4] = Math.sin((angle*Math.PI/180));
-            matrix[5] = Math.cos((angle*Math.PI/180));
+            matrix[0] = Math.cos(radian);
+            matrix[1] = -Math.sin(radian);
+            matrix[4] = Math.sin(radian);
+            matrix[5] = Math.cos(radian);
         }
         return Transformation(vertices,matrix);
     }
