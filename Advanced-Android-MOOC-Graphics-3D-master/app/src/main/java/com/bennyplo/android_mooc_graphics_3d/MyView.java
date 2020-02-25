@@ -32,23 +32,27 @@ public class MyView extends View {
         cube_vertices[6] = new Coordinate(1, 1, -1, 1);
         cube_vertices[7] = new Coordinate(1, 1, 1, 1);
 
-        draw_cube_vertices=translate(cube_vertices,2,2,2);
+        /*draw_cube_vertices=translate(cube_vertices,2,2,2);
         draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
-//        draw_cube_vertices=rotate(draw_cube_vertices,45,1);
-//        draw_cube_vertices=rotate(draw_cube_vertices,45,0);
+        draw_cube_vertices=rotate(draw_cube_vertices,45,1);
+        draw_cube_vertices=rotate(draw_cube_vertices,45,0);*/
+
+//        draw_cube_vertices=rotate(draw_cube_vertices,80,2);
+//        draw_cube_vertices=rotate(draw_cube_vertices,30,1);
         thisview.invalidate();//update the view
 
-        /*### 1st try
-        Timer timer = new Timer();
+        //### 1st Gimbal lock now works
+        /*Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             int angle=45;
             @Override
             public void run() {
                 draw_cube_vertices=translate(cube_vertices,2,2,2);
                 draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
-                draw_cube_vertices=rotate(draw_cube_vertices,90,0);
-                draw_cube_vertices=rotate(draw_cube_vertices,25,1);
-                draw_cube_vertices=translate(cube_vertices,200,200,0);
+                draw_cube_vertices=rotate(draw_cube_vertices,angle,0);
+                draw_cube_vertices=rotate(draw_cube_vertices,90,1);
+                draw_cube_vertices=rotate(draw_cube_vertices,25,2);
+                draw_cube_vertices=translate(draw_cube_vertices,200,200,0);
                 thisview.invalidate();
                 angle+=10;
                 if (angle>=360) angle=0;
@@ -57,7 +61,7 @@ public class MyView extends View {
         timer.scheduleAtFixedRate(task,100,100);*/
 
         ///2sd try
-        Timer timer = new Timer();
+/*        Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             float position_x=0f;
             boolean dir=true;
@@ -77,7 +81,7 @@ public class MyView extends View {
                 thisview.invalidate();
             }
         };
-        timer.scheduleAtFixedRate(task,100,2);
+        timer.scheduleAtFixedRate(task,100,2);*/
     }
 
     private  void DrawLinePairs(Canvas canvas, Coordinate[] vertices, int start, int end, Paint paint)
@@ -202,6 +206,12 @@ public class MyView extends View {
             matrix[5] = Math.cos(radian);
         }
         return Transformation(vertices,matrix);
+    }
+    private Coordinate[] shear(Coordinate[] vertices, double hx, double hy) {
+        double[] matrix = GetIdentityMatrix();
+        matrix[2] = hx;
+        matrix[6] = hy;
+        return Transformation(vertices, matrix);
     }
 
 }
