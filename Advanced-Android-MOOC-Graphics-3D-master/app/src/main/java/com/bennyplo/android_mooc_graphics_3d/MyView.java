@@ -32,13 +32,11 @@ public class MyView extends View {
         cube_vertices[6] = new Coordinate(1, 1, -1, 1);
         cube_vertices[7] = new Coordinate(1, 1, 1, 1);
 
-        /*draw_cube_vertices=translate(cube_vertices,2,2,2);
+        draw_cube_vertices=translate(cube_vertices,2,2,2);
         draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
-        draw_cube_vertices=rotate(draw_cube_vertices,45,1);
-        draw_cube_vertices=rotate(draw_cube_vertices,45,0);*/
 
-//        draw_cube_vertices=rotate(draw_cube_vertices,80,2);
-//        draw_cube_vertices=rotate(draw_cube_vertices,30,1);
+        /*draw_cube_vertices=rotate(draw_cube_vertices,45,1);
+        draw_cube_vertices=rotate(draw_cube_vertices,45,0);*/
         thisview.invalidate();//update the view
 
         //### 1st Gimbal lock now works
@@ -60,8 +58,8 @@ public class MyView extends View {
         };
         timer.scheduleAtFixedRate(task,100,100);*/
 
-        ///2sd try
-/*        Timer timer = new Timer();
+        ///2sd try vai e vem works
+        Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             float position_x=0f;
             boolean dir=true;
@@ -81,7 +79,8 @@ public class MyView extends View {
                 thisview.invalidate();
             }
         };
-        timer.scheduleAtFixedRate(task,100,2);*/
+        timer.scheduleAtFixedRate(task,100,2);
+
     }
 
     private  void DrawLinePairs(Canvas canvas, Coordinate[] vertices, int start, int end, Paint paint)
