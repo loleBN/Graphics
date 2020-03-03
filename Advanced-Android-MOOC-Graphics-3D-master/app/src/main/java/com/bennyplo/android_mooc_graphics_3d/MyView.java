@@ -59,7 +59,7 @@ public class MyView extends View {
         timer.scheduleAtFixedRate(task,100,100);*/
 
         ///2sd try vai e vem works
-        Timer timer = new Timer();
+/*        Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             float position_x=0f;
             boolean dir=true;
@@ -79,8 +79,31 @@ public class MyView extends View {
                 thisview.invalidate();
             }
         };
-        timer.scheduleAtFixedRate(task,100,2);
+        timer.scheduleAtFixedRate(task,100,2);*/
 
+        //quartenion
+//        Timer timer = new Timer();
+//        TimerTask task = new TimerTask() {
+//            float position_x=0f;
+//            double position_y=-0.5d;
+//            boolean dir=true;
+//            @Override
+//            public void run() {
+//                if (position_y>=0 && dir == true)
+//                    dir=false;
+//                else if (dir==false && position_y<=-1)
+//                    dir=true;
+//                if(dir){
+//                    draw_cube_vertices=quaternion(draw_cube_vertices,1,0,0.05,0.05);
+//                    position_y+=0.05d;
+//                } else {
+//                    draw_cube_vertices=quaternion(draw_cube_vertices,1,0,-0.05,-0.05);
+//                    position_y-=0.05d;
+//                }
+//                thisview.invalidate();
+//            }
+//        };
+//        timer.scheduleAtFixedRate(task,100,90);
     }
 
     private  void DrawLinePairs(Canvas canvas, Coordinate[] vertices, int start, int end, Paint paint)
@@ -210,6 +233,24 @@ public class MyView extends View {
         double[] matrix = GetIdentityMatrix();
         matrix[2] = hx;
         matrix[6] = hy;
+        return Transformation(vertices, matrix);
+    }
+
+    private Coordinate[] quaternion(Coordinate[] vertices, double w, double x, double y, double z) {
+        double[] matrix = GetIdentityMatrix();
+
+        matrix[0] = (w*w)+(x*x)-(y*y)-(z*z);
+        matrix[1] = 2*(x*y) - 2*(w*z);
+        matrix[2] = 2*(x*z) + 2*(w*x);
+
+        matrix[4] = 2*(x*y) + 2*(w*z);
+        matrix[5] = (w*w)+(y*y)-(x*x)-(z*z);
+        matrix[6] = 2*(y*z) - 2*(w*x);
+
+        matrix[8] = 2*(x*z) - 2*(w*y);
+        matrix[9] = 2*(y*z) + 2*(w*x);
+        matrix[10] = (w*w)+(z*z)-(x*x)-(y*y);
+
         return Transformation(vertices, matrix);
     }
 
