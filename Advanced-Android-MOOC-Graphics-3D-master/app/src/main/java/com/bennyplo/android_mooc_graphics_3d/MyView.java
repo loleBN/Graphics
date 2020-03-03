@@ -35,31 +35,9 @@ public class MyView extends View {
         draw_cube_vertices=translate(cube_vertices,2,2,2);
         draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
 
-        /*draw_cube_vertices=rotate(draw_cube_vertices,45,1);
-        draw_cube_vertices=rotate(draw_cube_vertices,45,0);*/
         thisview.invalidate();//update the view
 
-        //### 1st Gimbal lock now works
-        /*Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            int angle=45;
-            @Override
-            public void run() {
-                draw_cube_vertices=translate(cube_vertices,2,2,2);
-                draw_cube_vertices=scale(draw_cube_vertices,40,40,40);
-                draw_cube_vertices=rotate(draw_cube_vertices,angle,0);
-                draw_cube_vertices=rotate(draw_cube_vertices,90,1);
-                draw_cube_vertices=rotate(draw_cube_vertices,25,2);
-                draw_cube_vertices=translate(draw_cube_vertices,200,200,0);
-                thisview.invalidate();
-                angle+=10;
-                if (angle>=360) angle=0;
-            }
-        };
-        timer.scheduleAtFixedRate(task,100,100);*/
-
-        ///2sd try vai e vem works
-/*        Timer timer = new Timer();
+        Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             float position_x=0f;
             boolean dir=true;
@@ -79,31 +57,8 @@ public class MyView extends View {
                 thisview.invalidate();
             }
         };
-        timer.scheduleAtFixedRate(task,100,2);*/
+        timer.scheduleAtFixedRate(task,100,2);
 
-        //quartenion
-//        Timer timer = new Timer();
-//        TimerTask task = new TimerTask() {
-//            float position_x=0f;
-//            double position_y=-0.5d;
-//            boolean dir=true;
-//            @Override
-//            public void run() {
-//                if (position_y>=0 && dir == true)
-//                    dir=false;
-//                else if (dir==false && position_y<=-1)
-//                    dir=true;
-//                if(dir){
-//                    draw_cube_vertices=quaternion(draw_cube_vertices,1,0,0.05,0.05);
-//                    position_y+=0.05d;
-//                } else {
-//                    draw_cube_vertices=quaternion(draw_cube_vertices,1,0,-0.05,-0.05);
-//                    position_y-=0.05d;
-//                }
-//                thisview.invalidate();
-//            }
-//        };
-//        timer.scheduleAtFixedRate(task,100,90);
     }
 
     private  void DrawLinePairs(Canvas canvas, Coordinate[] vertices, int start, int end, Paint paint)
