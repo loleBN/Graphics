@@ -90,31 +90,31 @@ public class MyView extends View {
         left_foot_vertices=translate(left_foot_vertices,650,1585,50);
 
 
-        head_vertices=rotate(head_vertices,45,1);
-        upbody_vertices=rotate(upbody_vertices,45,1);
-        neck_vertices=rotate(neck_vertices,45,1);
-        hip_vertices=rotate(hip_vertices,45,1);
-        right_leg_vertices=rotate(right_leg_vertices,45,1);
-        long_right_leg_vertices=rotate(long_right_leg_vertices,45,1);
-        left_leg_vertices=rotate(left_leg_vertices,45,1);
-        long_left_leg_vertices=rotate(long_left_leg_vertices,45,1);
-        right_foot_vertices=rotate(right_foot_vertices,45,1);
-        left_foot_vertices=rotate(left_foot_vertices,45,1);
+//        head_vertices=rotate(head_vertices,45,1);
+//        upbody_vertices=rotate(upbody_vertices,45,1);
+//        neck_vertices=rotate(neck_vertices,45,1);
+//        hip_vertices=rotate(hip_vertices,45,1);
+//        right_leg_vertices=rotate(right_leg_vertices,45,1);
+//        long_right_leg_vertices=rotate(long_right_leg_vertices,45,1);
+//        left_leg_vertices=rotate(left_leg_vertices,45,1);
+//        long_left_leg_vertices=rotate(long_left_leg_vertices,45,1);
+//        right_foot_vertices=rotate(right_foot_vertices,45,1);
+//        left_foot_vertices=rotate(left_foot_vertices,45,1);
 
-        thisview.invalidate();//update the view
+//        thisview.invalidate();//update the view
 
 
-//        Timer timer = new Timer();
-//        TimerTask task = new TimerTask() {
-//            float position_x=0f;
-//            boolean dir=true;
-//            @Override
-//            public void run() {
-//                if (position_x+80>=getWidth() && dir == true)
-//                    dir=false;
-//                else if (dir==false && position_x<=0)
-//                    dir=true;
-//                if(dir){
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            float position_x=0f;
+            boolean dir=true;
+            @Override
+            public void run() {
+                if (position_x+80>=getWidth() && dir == true)
+                    dir=false;
+                else if (dir==false && position_x<=0)
+                    dir=true;
+                if(dir){
 //                    head_vertices=quaternion(head_vertices,1,0,0.5,0);
 //                    upbody_vertices=quaternion(upbody_vertices,1,0,0.5,0);
 //                    neck_vertices=quaternion(neck_vertices,1,0,0.5,0);
@@ -125,8 +125,18 @@ public class MyView extends View {
 //                    long_left_leg_vertices=quaternion(long_left_leg_vertices,1,0,0.5,0);
 //                    right_foot_vertices=quaternion(right_foot_vertices,1,0,0.5,0);
 //                    left_foot_vertices=quaternion(left_foot_vertices,1,0,0.5,0);
-//                    position_x+=1f;
-//                } else {
+                    head_vertices=rotate(head_vertices,45,1);
+                    upbody_vertices=rotate(upbody_vertices,45,1);
+                    neck_vertices=rotate(neck_vertices,45,1);
+                    hip_vertices=rotate(hip_vertices,45,1);
+                    right_leg_vertices=rotate(right_leg_vertices,45,1);
+                    long_right_leg_vertices=rotate(long_right_leg_vertices,45,1);
+                    left_leg_vertices=rotate(left_leg_vertices,45,1);
+                    long_left_leg_vertices=rotate(long_left_leg_vertices,45,1);
+                    right_foot_vertices=rotate(right_foot_vertices,45,1);
+                    left_foot_vertices=rotate(left_foot_vertices,45,1);
+                    position_x+=1f;
+                } else {
 //                    head_vertices=quaternion(head_vertices,1,0,0.5,0);
 //                    upbody_vertices=quaternion(upbody_vertices,1,0,0.5,0);
 //                    neck_vertices=quaternion(neck_vertices,1,0,0.5,0);
@@ -137,12 +147,22 @@ public class MyView extends View {
 //                    long_left_leg_vertices=quaternion(long_left_leg_vertices,1,0,0.5,0);
 //                    right_foot_vertices=quaternion(right_foot_vertices,1,0,0.5,0);
 //                    left_foot_vertices=quaternion(left_foot_vertices,1,0,0.5,0);
-//                    position_x-=1f;
-//                }
-//                thisview.invalidate();
-//            }
-//        };
-//        timer.scheduleAtFixedRate(task,100,2);
+                    head_vertices=rotate(head_vertices,45,1);
+                    upbody_vertices=rotate(upbody_vertices,45,1);
+                    neck_vertices=rotate(neck_vertices,45,1);
+                    hip_vertices=rotate(hip_vertices,45,1);
+                    right_leg_vertices=rotate(right_leg_vertices,45,1);
+                    long_right_leg_vertices=rotate(long_right_leg_vertices,45,1);
+                    left_leg_vertices=rotate(left_leg_vertices,45,1);
+                    long_left_leg_vertices=rotate(long_left_leg_vertices,45,1);
+                    right_foot_vertices=rotate(right_foot_vertices,45,1);
+                    left_foot_vertices=rotate(left_foot_vertices,45,1);
+                    position_x-=1f;
+                }
+                thisview.invalidate();
+            }
+        };
+        timer.scheduleAtFixedRate(task,100,500);
 
     }
 
