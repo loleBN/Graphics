@@ -23,6 +23,10 @@ public class MyView extends View {
     private Coordinate[]long_left_leg_vertices;
     private Coordinate[]right_foot_vertices;
     private Coordinate[]left_foot_vertices;
+    private Coordinate[]right_up_arm_vertices;
+    private Coordinate[]left_up_arm_vertices;
+    private Coordinate[]right_long_arm_vertices;
+    private Coordinate[]left_long_arm_vertices;
     public MyView(Context context) {
         super(context, null);
         final MyView thisview=this;
@@ -68,6 +72,18 @@ public class MyView extends View {
         upbody_vertices=scale(cube_vertices,200,250,50);
         upbody_vertices=translate(upbody_vertices,500,710,50);
 
+        right_up_arm_vertices=scale(cube_vertices,50,100,50);
+        right_up_arm_vertices=translate(right_up_arm_vertices,250,560,50);
+
+        left_up_arm_vertices=scale(cube_vertices,50,100,50);
+        left_up_arm_vertices=translate(left_up_arm_vertices,750,560,50);
+
+        right_long_arm_vertices=scale(cube_vertices,50,130,50);
+        right_long_arm_vertices=translate(right_long_arm_vertices,250,790,50);
+
+        left_long_arm_vertices=scale(cube_vertices,50,130,50);
+        left_long_arm_vertices=translate(left_long_arm_vertices,750,790,50);
+
         hip_vertices=scale(cube_vertices,200,50,50);
         hip_vertices=translate(hip_vertices,500,1010,50);
 
@@ -101,20 +117,20 @@ public class MyView extends View {
 //        right_foot_vertices=rotate(right_foot_vertices,45,1);
 //        left_foot_vertices=rotate(left_foot_vertices,45,1);
 
-//        thisview.invalidate();//update the view
+        thisview.invalidate();//update the view
 
 
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            float position_x=0f;
-            boolean dir=true;
-            @Override
-            public void run() {
-                if (position_x+80>=getWidth() && dir == true)
-                    dir=false;
-                else if (dir==false && position_x<=0)
-                    dir=true;
-                if(dir){
+//        Timer timer = new Timer();
+//        TimerTask task = new TimerTask() {
+//            float position_x=0f;
+//            boolean dir=true;
+//            @Override
+//            public void run() {
+//                if (position_x+80>=getWidth() && dir == true)
+//                    dir=false;
+//                else if (dir==false && position_x<=0)
+//                    dir=true;
+//                if(dir){
 //                    head_vertices=quaternion(head_vertices,1,0,0.5,0);
 //                    upbody_vertices=quaternion(upbody_vertices,1,0,0.5,0);
 //                    neck_vertices=quaternion(neck_vertices,1,0,0.5,0);
@@ -125,18 +141,18 @@ public class MyView extends View {
 //                    long_left_leg_vertices=quaternion(long_left_leg_vertices,1,0,0.5,0);
 //                    right_foot_vertices=quaternion(right_foot_vertices,1,0,0.5,0);
 //                    left_foot_vertices=quaternion(left_foot_vertices,1,0,0.5,0);
-                    head_vertices=rotate(head_vertices,45,1);
-                    upbody_vertices=rotate(upbody_vertices,45,1);
-                    neck_vertices=rotate(neck_vertices,45,1);
-                    hip_vertices=rotate(hip_vertices,45,1);
-                    right_leg_vertices=rotate(right_leg_vertices,45,1);
-                    long_right_leg_vertices=rotate(long_right_leg_vertices,45,1);
-                    left_leg_vertices=rotate(left_leg_vertices,45,1);
-                    long_left_leg_vertices=rotate(long_left_leg_vertices,45,1);
-                    right_foot_vertices=rotate(right_foot_vertices,45,1);
-                    left_foot_vertices=rotate(left_foot_vertices,45,1);
-                    position_x+=1f;
-                } else {
+//                    head_vertices=rotate(head_vertices,45,1);
+//                    upbody_vertices=rotate(upbody_vertices,45,1);
+//                    neck_vertices=rotate(neck_vertices,45,1);
+//                    hip_vertices=rotate(hip_vertices,45,1);
+//                    right_leg_vertices=rotate(right_leg_vertices,45,1);
+//                    long_right_leg_vertices=rotate(long_right_leg_vertices,45,1);
+//                    left_leg_vertices=rotate(left_leg_vertices,45,1);
+//                    long_left_leg_vertices=rotate(long_left_leg_vertices,45,1);
+//                    right_foot_vertices=rotate(right_foot_vertices,45,1);
+//                    left_foot_vertices=rotate(left_foot_vertices,45,1);
+//                    position_x+=1f;
+//                } else {
 //                    head_vertices=quaternion(head_vertices,1,0,0.5,0);
 //                    upbody_vertices=quaternion(upbody_vertices,1,0,0.5,0);
 //                    neck_vertices=quaternion(neck_vertices,1,0,0.5,0);
@@ -147,22 +163,22 @@ public class MyView extends View {
 //                    long_left_leg_vertices=quaternion(long_left_leg_vertices,1,0,0.5,0);
 //                    right_foot_vertices=quaternion(right_foot_vertices,1,0,0.5,0);
 //                    left_foot_vertices=quaternion(left_foot_vertices,1,0,0.5,0);
-                    head_vertices=rotate(head_vertices,45,1);
-                    upbody_vertices=rotate(upbody_vertices,45,1);
-                    neck_vertices=rotate(neck_vertices,45,1);
-                    hip_vertices=rotate(hip_vertices,45,1);
-                    right_leg_vertices=rotate(right_leg_vertices,45,1);
-                    long_right_leg_vertices=rotate(long_right_leg_vertices,45,1);
-                    left_leg_vertices=rotate(left_leg_vertices,45,1);
-                    long_left_leg_vertices=rotate(long_left_leg_vertices,45,1);
-                    right_foot_vertices=rotate(right_foot_vertices,45,1);
-                    left_foot_vertices=rotate(left_foot_vertices,45,1);
-                    position_x-=1f;
-                }
-                thisview.invalidate();
-            }
-        };
-        timer.scheduleAtFixedRate(task,100,500);
+//                    head_vertices=rotate(head_vertices,45,1);
+//                    upbody_vertices=rotate(upbody_vertices,45,1);
+//                    neck_vertices=rotate(neck_vertices,45,1);
+//                    hip_vertices=rotate(hip_vertices,45,1);
+//                    right_leg_vertices=rotate(right_leg_vertices,45,1);
+//                    long_right_leg_vertices=rotate(long_right_leg_vertices,45,1);
+//                    left_leg_vertices=rotate(left_leg_vertices,45,1);
+//                    long_left_leg_vertices=rotate(long_left_leg_vertices,45,1);
+//                    right_foot_vertices=rotate(right_foot_vertices,45,1);
+//                    left_foot_vertices=rotate(left_foot_vertices,45,1);
+//                    position_x-=1f;
+//                }
+//                thisview.invalidate();
+//            }
+//        };
+//        timer.scheduleAtFixedRate(task,100,500);
 
     }
 
@@ -216,6 +232,58 @@ public class MyView extends View {
         DrawLinePairs(canvas, upbody_vertices, 1, 5, redPaint);
         DrawLinePairs(canvas, upbody_vertices, 2, 6, redPaint);
         DrawLinePairs(canvas, upbody_vertices, 3, 7, redPaint);
+
+        DrawLinePairs(canvas, right_up_arm_vertices, 0, 1, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 1, 3, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 3, 2, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 2, 0, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 4, 5, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 5, 7, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 7, 6, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 6, 4, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 0, 4, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 1, 5, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 2, 6, bluePaint);
+        DrawLinePairs(canvas, right_up_arm_vertices, 3, 7, bluePaint);
+
+        DrawLinePairs(canvas, left_up_arm_vertices, 0, 1, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 1, 3, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 3, 2, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 2, 0, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 4, 5, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 5, 7, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 7, 6, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 6, 4, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 0, 4, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 1, 5, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 2, 6, bluePaint);
+        DrawLinePairs(canvas, left_up_arm_vertices, 3, 7, bluePaint);
+
+        DrawLinePairs(canvas, right_long_arm_vertices, 0, 1, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 1, 3, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 3, 2, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 2, 0, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 4, 5, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 5, 7, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 7, 6, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 6, 4, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 0, 4, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 1, 5, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 2, 6, greenPaint);
+        DrawLinePairs(canvas, right_long_arm_vertices, 3, 7, greenPaint);
+
+        DrawLinePairs(canvas, left_long_arm_vertices, 0, 1, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 1, 3, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 3, 2, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 2, 0, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 4, 5, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 5, 7, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 7, 6, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 6, 4, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 0, 4, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 1, 5, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 2, 6, greenPaint);
+        DrawLinePairs(canvas, left_long_arm_vertices, 3, 7, greenPaint);
 
         DrawLinePairs(canvas, hip_vertices, 0, 1, pinkPaint);
         DrawLinePairs(canvas, hip_vertices, 1, 3, pinkPaint);
