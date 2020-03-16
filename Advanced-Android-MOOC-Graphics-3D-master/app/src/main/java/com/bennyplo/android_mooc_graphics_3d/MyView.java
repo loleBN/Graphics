@@ -10,7 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MyView extends View {
-    private Paint redPaint, bluePaint, pinkPaint,greenPaint;
+    private Paint redPaint, bluePaint, pinkPaint,greenPaint,cyanPaint;
     private Coordinate[]cube_vertices;
     private Coordinate[]draw_cube_vertices;
     private Coordinate[]head_vertices;
@@ -27,6 +27,8 @@ public class MyView extends View {
     private Coordinate[]left_up_arm_vertices;
     private Coordinate[]right_long_arm_vertices;
     private Coordinate[]left_long_arm_vertices;
+    private Coordinate[]right_hand_vertices;
+    private Coordinate[]left_hand_vertices;
     public MyView(Context context) {
         super(context, null);
         final MyView thisview=this;
@@ -50,6 +52,11 @@ public class MyView extends View {
         greenPaint.setStyle(Paint.Style.STROKE);//Stroke
         greenPaint.setColor(Color.GREEN);
         greenPaint.setStrokeWidth(2);
+
+        cyanPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        cyanPaint.setStyle(Paint.Style.STROKE);//Stroke
+        cyanPaint.setColor(Color.CYAN);
+        cyanPaint.setStrokeWidth(2);
 
         //create a 3D cube
         cube_vertices = new Coordinate[8];
@@ -83,6 +90,12 @@ public class MyView extends View {
 
         left_long_arm_vertices=scale(cube_vertices,50,130,50);
         left_long_arm_vertices=translate(left_long_arm_vertices,750,790,50);
+
+        right_hand_vertices=scale(cube_vertices,50,25,50);
+        right_hand_vertices=translate(right_hand_vertices,250,945,50);
+
+        left_hand_vertices=scale(cube_vertices,50,25,50);
+        left_hand_vertices=translate(left_hand_vertices,750,945,50);
 
         hip_vertices=scale(cube_vertices,200,50,50);
         hip_vertices=translate(hip_vertices,500,1010,50);
@@ -284,6 +297,32 @@ public class MyView extends View {
         DrawLinePairs(canvas, left_long_arm_vertices, 1, 5, greenPaint);
         DrawLinePairs(canvas, left_long_arm_vertices, 2, 6, greenPaint);
         DrawLinePairs(canvas, left_long_arm_vertices, 3, 7, greenPaint);
+
+        DrawLinePairs(canvas, right_hand_vertices, 0, 1, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 1, 3, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 3, 2, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 2, 0, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 4, 5, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 5, 7, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 7, 6, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 6, 4, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 0, 4, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 1, 5, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 2, 6, cyanPaint);
+        DrawLinePairs(canvas, right_hand_vertices, 3, 7, cyanPaint);
+
+        DrawLinePairs(canvas, left_hand_vertices, 0, 1, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 1, 3, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 3, 2, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 2, 0, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 4, 5, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 5, 7, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 7, 6, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 6, 4, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 0, 4, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 1, 5, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 2, 6, cyanPaint);
+        DrawLinePairs(canvas, left_hand_vertices, 3, 7, cyanPaint);
 
         DrawLinePairs(canvas, hip_vertices, 0, 1, pinkPaint);
         DrawLinePairs(canvas, hip_vertices, 1, 3, pinkPaint);
