@@ -91,10 +91,10 @@ public class MyView extends View {
         left_long_arm_vertices=scale(cube_vertices,50,130,50);
         left_long_arm_vertices=translate(left_long_arm_vertices,750,790,50);
 
-        right_hand_vertices=scale(cube_vertices,50,25,50);
+        right_hand_vertices=scale(cube_vertices,50,25,100);
         right_hand_vertices=translate(right_hand_vertices,250,945,50);
 
-        left_hand_vertices=scale(cube_vertices,50,25,50);
+        left_hand_vertices=scale(cube_vertices,50,25,100);
         left_hand_vertices=translate(left_hand_vertices,750,945,50);
 
         hip_vertices=scale(cube_vertices,200,50,50);
@@ -112,16 +112,22 @@ public class MyView extends View {
         long_left_leg_vertices=scale(cube_vertices,50,150,50);
         long_left_leg_vertices=translate(long_left_leg_vertices,650,1410,50);
 
-        right_foot_vertices=scale(cube_vertices,50,25,50);
+        right_foot_vertices=scale(cube_vertices,50,25,150);
         right_foot_vertices=translate(right_foot_vertices,350,1585,50);
 
-        left_foot_vertices=scale(cube_vertices,50,25,50);
+        left_foot_vertices=scale(cube_vertices,50,25,150);
         left_foot_vertices=translate(left_foot_vertices,650,1585,50);
 
 
 //        head_vertices=rotate(head_vertices,45,1);
 //        upbody_vertices=rotate(upbody_vertices,45,1);
 //        neck_vertices=rotate(neck_vertices,45,1);
+//        right_up_arm_vertices=rotate(right_up_arm_vertices,45,1);
+//        right_long_arm_vertices=rotate(right_long_arm_vertices,45,1);
+//        right_hand_vertices=rotate(right_hand_vertices,45,1);
+//        left_up_arm_vertices=rotate(left_up_arm_vertices,45,1);
+//        left_long_arm_vertices=rotate(left_long_arm_vertices,45,1);
+//        left_hand_vertices=rotate(left_hand_vertices,45,1);
 //        hip_vertices=rotate(hip_vertices,45,1);
 //        right_leg_vertices=rotate(right_leg_vertices,45,1);
 //        long_right_leg_vertices=rotate(long_right_leg_vertices,45,1);
